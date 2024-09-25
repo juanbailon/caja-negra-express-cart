@@ -34,6 +34,7 @@ class DiscountCodeCreationTestSetup(BaseAdminPanelTestSetup):
     def setUp(self, discount_type: str = None):
         # Setup code
         self.driver.get(settings.ADMIN_CREATE_DISCOUNT_CODE_URL)
+        time.sleep(1)
         self.discount_code = utils.generate_random_string(size= 8)
         self.valid_discount_types = ['amount', 'percent']
         self.discount_value = random.randint(1, 100)

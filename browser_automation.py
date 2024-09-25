@@ -17,7 +17,7 @@ import browser_scripts
 
 
 def create_chrome_web_driver_conection(headless:bool = False,
-                                       detach:bool = True,
+                                       detach:bool = False,
                                        use_sandbox: bool = True,
                                        use_dev_shm: bool = True,
                                        window_width: int = 1052,

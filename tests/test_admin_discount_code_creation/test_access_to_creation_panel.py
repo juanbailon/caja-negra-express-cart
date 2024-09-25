@@ -12,5 +12,5 @@ class TestAccestoToPanelAndSendEmptyForm(BaseAdminPanelTestSetup):
         button = browser_elements.get_add_discount_button(driver= self.driver)
         button.click()
 
-        is_visible = browser_elements.notify_message_div_is_visible(driver= self.driver, element_timeout=3)
+        is_visible = browser_elements.notify_message_div_is_visible(driver= self.driver)
         self.assertFalse(is_visible)

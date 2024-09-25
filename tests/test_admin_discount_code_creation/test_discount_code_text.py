@@ -289,7 +289,7 @@ class TestDiscountCodeText(DiscountCodeCreationTestSetup):
     
 
     def test_emoji_only_discount_code(self):
-        emojis = "😬💀🧟‍♀️🥶👺🧱🤖🔩🚲🎃🍫🇨🇮🐘🎪👏"
+        emojis = "😬💀🧟‍♀️🥶👺🧱🤖🔩🚲🎃🍫🇨🇮🐘🎪👏🐧🇧🇻🥸🕵️🔫🪖🥲❤️‍🩹💊🔥💯🔑🔓"
         code = utils.generate_random_string(size=6, char_set= emojis)
         self.run_discount_code_characters_validity_test(code= code,
                                                         use_javascript= True,
@@ -298,7 +298,7 @@ class TestDiscountCodeText(DiscountCodeCreationTestSetup):
     
     def test_discount_code_with_emojis(self):
         size = random.randint(8, 16)
-        emojis = "😬💀🧟‍♀️🥶👺🧱🤖🔩🚲🎃🍫🇨🇮🐘🎪👏"
+        emojis = "😬💀🧟‍♀️🥶👺🧱🤖🔩🚲🎃🍫🇨🇮🐘🎪👏🐧🇧🇻🥸🕵️🔫🪖🥲❤️‍🩹💊🔥💯🔑🔓"
         random_str = utils.generate_random_string(size= size) + random.choice(emojis)
         random_str = list(random_str)
         random.shuffle(random_str)

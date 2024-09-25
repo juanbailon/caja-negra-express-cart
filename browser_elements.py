@@ -137,7 +137,7 @@ def get_notify_message_div(driver: WebDriver, element_timeout:int = 5)-> WebElem
     
 
 
-def notify_message_div_is_visible(driver: WebDriver, element_timeout: int = 3) -> bool:
+def notify_message_div_is_visible(driver: WebDriver, element_timeout: int = 5) -> bool:
     try:
         notify_div = WebDriverWait(driver, element_timeout).until(
             EC.visibility_of_element_located((By.ID, "notify_message"))
@@ -150,7 +150,7 @@ def notify_message_div_is_visible(driver: WebDriver, element_timeout: int = 3) -
     
 
 
-def notify_message_alert_danger_is_visible(driver: WebDriver, element_timeout: int = 3) -> bool:
+def notify_message_alert_danger_is_visible(driver: WebDriver, element_timeout: int = 5) -> bool:
     try:
         notify_div = WebDriverWait(driver, element_timeout).until(
             EC.visibility_of_element_located((By.XPATH, "//div[\
@@ -165,7 +165,7 @@ def notify_message_alert_danger_is_visible(driver: WebDriver, element_timeout: i
         return False
     
 
-def notify_message_alert_success_is_visible(driver: WebDriver, element_timeout: int = 3) -> bool:
+def notify_message_alert_success_is_visible(driver: WebDriver, element_timeout: int = 5) -> bool:
     try:
         notify_div = WebDriverWait(driver, element_timeout).until(
             EC.visibility_of_element_located((By.XPATH, "//div[\

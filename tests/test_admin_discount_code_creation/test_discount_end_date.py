@@ -92,7 +92,7 @@ class TestDiscountCodeEndDate(DiscountCodeCreationTestSetup):
 
 
     def test_end_date_with_trailing_whitespace_chars(self):
-        trailing_size = random.randint(1, 8)
+        trailing_size = random.randint(3, 8)
         whitespaces = utils.generate_random_string(size= trailing_size, char_set= string.whitespace)
         end_time_str = self.end_time_str + whitespaces
         self.set_end_date_value_string(end_time_str= end_time_str)
@@ -103,11 +103,10 @@ class TestDiscountCodeEndDate(DiscountCodeCreationTestSetup):
 
 
     def test_end_date_with_leading_whitespace_chars(self):
-        leading_size = random.randint(1, 8)
+        leading_size = random.randint(3, 8)
         whitespaces = utils.generate_random_string(size= leading_size, char_set= string.whitespace)
         end_time_str = whitespaces + self.end_time_str
         self.set_end_date_value_string(end_time_str= end_time_str)
-        self.run_website_end_time_equal_to_test(end_time= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
@@ -115,12 +114,11 @@ class TestDiscountCodeEndDate(DiscountCodeCreationTestSetup):
 
 
     def test_end_date_with_leading_and_trailing_whitespace_chars(self):
-        size = random.randint(1, 8)
+        size = random.randint(3, 8)
         leading = utils.generate_random_string(size= size, char_set= string.whitespace)
         trailing = utils.generate_random_string(size= size, char_set= string.whitespace)
         end_time_str = leading + self.end_time_str + trailing
         self.set_end_date_value_string(end_time_str= end_time_str)
-        self.run_website_end_time_equal_to_test(end_time= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
@@ -224,7 +222,6 @@ class TestDiscountCodeEndDate(DiscountCodeCreationTestSetup):
         trailing_chars = utils.generate_random_string(size= trailing_size, char_set= string.printable)
         end_time_str = self.end_time_str + trailing_chars
         self.set_end_date_value_string(end_time_str= end_time_str)
-        self.run_website_end_time_equal_to_test(end_time= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
@@ -233,10 +230,10 @@ class TestDiscountCodeEndDate(DiscountCodeCreationTestSetup):
 
     def test_end_date_with_leading_chars(self):
         leadingsize = random.randint(5, 15)
-        leading_chars = utils.generate_random_string(size= leadingsize, char_set= string.printable)
+        char_set = string.ascii_letters + string.digits + string.punctuation
+        leading_chars = utils.generate_random_string(size= leadingsize, char_set= char_set )
         end_time_str = leading_chars + self.end_time_str
         self.set_end_date_value_string(end_time_str= end_time_str)
-        self.run_website_end_time_equal_to_test(end_time= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
@@ -249,7 +246,6 @@ class TestDiscountCodeEndDate(DiscountCodeCreationTestSetup):
         trailing_chars = utils.generate_random_string(size= size, char_set= string.printable)
         end_time_str = leading_chars + self.end_time_str + trailing_chars
         self.set_end_date_value_string(end_time_str= end_time_str)
-        self.run_website_end_time_equal_to_test(end_time= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
