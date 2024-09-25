@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 from selenium import webdriver
 ## ---- Use for type hint ---- ##
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -8,6 +9,10 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.ui import Select
+import browser_elements
+import utils
+import browser_scripts
 
 
 
@@ -42,3 +47,44 @@ def open_url(driver: WebDriver, url: str):
 
 def wait(seconds: int|float):
     time.sleep(seconds)
+
+
+def admin_login(driver: WebDriver, email: str, password: str):
+
+    emial_input =  browser_elements.get_login_email_input(driver= driver)
+    password_input = browser_elements.get_login_password_input(driver= driver)
+    login_button = browser_elements.get_login_button(driver= driver)
+
+    emial_input.send_keys(email)
+    password_input.send_keys(password)
+    login_button.click()
+
+
+def select_discount_type(driver: WebDriver, discount_type: str):
+    # if discount_type not in ('percent', 'amount'):
+    #     raise ValueError(f"{type} is NOT a valid discount type. The only valid values are ['percent', 'amount']")
+    
+    select_menu = Select( browser_elements.get_discount_type_select_menu(driver= driver) )
+    select_menu.select_by_value(discount_type)
+
+
+def set_discount_start_time_value(driver: WebDriver, start_time: datetime):
+    start_date_element = browser_elements.get_discount_start_input(driver= driver)
+
+    start_time_str = utils.parse_datetime_to_european_format(start_time)
+
+    browser_scripts.set_element_value_attr(driver= driver,
+                                            element= start_date_element,
+                                            value= start_time_str
+                                        )
+    
+
+def set_discount_end_time_value(driver: WebDriver, end_time: datetime):
+    end_date_element = browser_elements.get_discount_end_input(driver= driver)
+
+    end_time_str = utils.parse_datetime_to_european_format(end_time)
+
+    browser_scripts.set_element_value_attr(driver= driver,
+                                            element= end_date_element,
+                                            value= end_time_str
+                                        )
