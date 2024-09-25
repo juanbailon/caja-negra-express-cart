@@ -1,8 +1,6 @@
 import browser_automation
 import browser_elements
 import settings
-from dotenv import load_dotenv
-import os
 
 
 def main():
@@ -10,8 +8,8 @@ def main():
     driver.get(settings.ADMIN_LOGIN_URL)
 
     browser_automation.admin_login(driver= driver,
-                                   email= os.getenv('ADMIN_EMAIL'),
-                                   password= os.getenv('ADMIN_PASSWORD')
+                                   email= settings.ADMIN_EMAIL,
+                                   password= settings.ADMIN_PASSWORD
                                    )
 
     browser_automation.wait(2)

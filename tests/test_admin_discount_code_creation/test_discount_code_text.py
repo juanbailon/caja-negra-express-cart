@@ -40,11 +40,11 @@ class TestDiscountCodeText(DiscountCodeCreationTestSetup):
         self.assert_focus_or_border_color(element= code_input)
 
     def test_valid_unique_discount_code(self):
-        code = 'my_unique_test_code_' + utils.generate_random_string(size=5)
+        code = 'uniqueCode' + utils.generate_random_string(size=5)
         self.run_seccessfull_discount_code_creation_test(code= code)
     
     def test_repeated_discount_code(self):
-        code = 'my_repeated_code_' + utils.generate_random_string(size=3)
+        code = 'repeatedCode' + utils.generate_random_string(size=3)
         self.set_discount_code_text(code= code)
         self.click_add_discount_button()
         time.sleep(1)
@@ -55,6 +55,43 @@ class TestDiscountCodeText(DiscountCodeCreationTestSetup):
 
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
         self.assertTrue(is_visible)
+
+    
+    def test_discount_code_length_equal_to_4(self):
+        """ 16 should be the min length allow """
+        code = utils.generate_random_string(size=4)
+        self.run_seccessfull_discount_code_creation_test(code= code)
+
+    def test_discount_code_length_equal_to_3(self):
+        code = utils.generate_random_string(size=3)
+        self.run_discount_code_characters_validity_test(code= code, use_javascript= False)
+
+    def test_discount_code_length_equal_to_5(self):
+        code = utils.generate_random_string(size=5)
+        self.run_seccessfull_discount_code_creation_test(code= code)
+
+    def test_discount_code_length_less_than_4(self):
+        size = random.randint(1, 2)
+        code = utils.generate_random_string(size=3)
+        self.run_discount_code_characters_validity_test(code= code, use_javascript= False)
+
+    def test_discount_code_length_equal_to_16(self):
+        """ 16 should be the max length allow """
+        code = utils.generate_random_string(size=16)
+        self.run_seccessfull_discount_code_creation_test(code= code)
+
+    def test_discount_code_length_equal_to_15(self):
+        code = utils.generate_random_string(size=15)
+        self.run_seccessfull_discount_code_creation_test(code= code)
+
+    def test_discount_code_length_equal_to_17(self):
+        code = utils.generate_random_string(size=17)
+        self.run_discount_code_characters_validity_test(code= code, use_javascript= False)
+
+    def test_discount_code_length_greater_than_16(self):
+        size = random.randint(18, 40)
+        code = utils.generate_random_string(size= size)
+        self.run_discount_code_characters_validity_test(code= code, use_javascript= False)
 
 
     def test_numbers_only_discount_code(self):
@@ -105,7 +142,7 @@ class TestDiscountCodeText(DiscountCodeCreationTestSetup):
         
 
     def test_keyboard_newline_only_discount_code(self):
-        code = "\n" * random.randint(1, 20)
+        code = "\n" * random.randint(4, 16)
         self.run_discount_code_characters_validity_test(code= code,
                                                         use_javascript= False,
                                                         assert_msg= f"The inputted chars were: {repr(code)}"

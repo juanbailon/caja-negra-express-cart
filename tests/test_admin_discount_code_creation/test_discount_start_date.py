@@ -124,8 +124,8 @@ class TestDiscountCodeStartDate(DiscountCodeCreationTestSetup):
         
         
     def test_start_date_is_invalid_date(self):
-        start_time_str = "31/11/2024 13:00"
-        end_time_str = "10/12/2024 14:30"
+        start_time_str = "31/11/2100 13:00"
+        end_time_str = "10/12/2100 14:30"
         self.set_start_date_value_string(start_time_str= start_time_str)
         self.set_end_date_value_string(end_time_str= end_time_str)
 
@@ -135,8 +135,8 @@ class TestDiscountCodeStartDate(DiscountCodeCreationTestSetup):
 
 
     def test_start_date_with_invalid_hour(self):
-        start_time_str = "31/11/2024 32:20"
-        end_time_str = "10/12/2024 14:30"
+        start_time_str = "31/11/2100 32:20"
+        end_time_str = "10/12/2100 14:30"
         self.set_start_date_value_string(start_time_str= start_time_str)
         self.set_end_date_value_string(end_time_str= end_time_str)
 
@@ -145,8 +145,8 @@ class TestDiscountCodeStartDate(DiscountCodeCreationTestSetup):
         self.assertTrue(is_visible)
 
     def test_start_date_with_invalid_minute(self):
-        start_time_str = "31/11/2024 2:89"
-        end_time_str = "10/12/2024 14:30"
+        start_time_str = "31/11/2100 2:89"
+        end_time_str = "10/12/2100 14:30"
         self.set_start_date_value_string(start_time_str= start_time_str)
         self.set_end_date_value_string(end_time_str= end_time_str)
 
@@ -156,11 +156,10 @@ class TestDiscountCodeStartDate(DiscountCodeCreationTestSetup):
 
     
     def test_start_date_without_an_specific_hour(self):
-        start_time_str = "20/11/2024"
-        end_time_str = "10/12/2024 14:30"
+        date_part, time_part = self.start_time_str.split(' ')
+        start_time_str = date_part
         self.set_start_date_value_string(start_time_str= start_time_str)
-        self.set_end_date_value_string(end_time_str= end_time_str)
-
+     
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
         self.assertTrue(is_visible)
@@ -168,10 +167,8 @@ class TestDiscountCodeStartDate(DiscountCodeCreationTestSetup):
     
     def test_start_date_with_chars_between_the_date_and_hour(self):
         chars = utils.generate_random_string(size=8)
-        start_time_str = f"20/11/2024{chars}14:34" 
-        end_time_str = "10/12/2024 14:30"
+        start_time_str = utils.insert_str_between_the_date_and_hour(date_str= self.start_time_str, insert_str= chars)
         self.set_start_date_value_string(start_time_str= start_time_str)
-        self.set_end_date_value_string(end_time_str= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
@@ -257,22 +254,28 @@ class TestDiscountCodeStartDate(DiscountCodeCreationTestSetup):
 
     def test_start_date_with_chars_between_the_date(self):
         chars = utils.generate_random_string(size=8)
-        start_time_str = f"20/11{chars}/2024 14:34" 
-        end_time_str = "10/12/2024 14:30"
+        start_time_str = utils.insert_str_into_date_part(date_str= self.start_time_str, insert_str= chars)
         self.set_start_date_value_string(start_time_str= start_time_str)
-        self.set_end_date_value_string(end_time_str= end_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
         self.assertTrue(is_visible)
 
 
-    def test_start_date_with_chars_between_the_hour(self):
+    def test_start_date_with_chars_between_the_time(self):
         chars = utils.generate_random_string(size=8)
-        start_time_str = f"20/11/2024 14{chars}:34" 
-        end_time_str = "10/12/2024 14:30"
+        start_time_str = utils.insert_str_into_time_part(date_str= self.start_time_str, insert_str= chars)
         self.set_start_date_value_string(start_time_str= start_time_str)
-        self.set_end_date_value_string(end_time_str= end_time_str)
+
+        self.click_add_discount_button()
+        is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)
+        self.assertTrue(is_visible)
+
+    
+    def test_start_date_with_multiple_spaces_between_the_date_and_hour(self):
+        spaces = " " * random.randint(2, 10)
+        start_time_str = utils.insert_str_between_the_date_and_hour(date_str= self.start_time_str, insert_str= spaces)
+        self.set_start_date_value_string(start_time_str= start_time_str)
 
         self.click_add_discount_button()
         is_visible = browser_elements.notify_message_alert_danger_is_visible(driver= self.driver)

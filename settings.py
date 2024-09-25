@@ -1,4 +1,11 @@
+from dotenv import load_dotenv
+import os
 
+IS_HEADLESS = os.getenv('IS_HEADLESS').lower() == 'true'
+
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
+
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
 
 BASE_URL = "http://localhost:1111"
 

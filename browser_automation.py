@@ -16,15 +16,18 @@ import browser_scripts
 
 
 
-def create_chrome_web_driver_conection(
+def create_chrome_web_driver_conection(headless:bool = False,
                                        detach:bool = True,
                                        use_sandbox: bool = True,
-                                       use_dev_shm: bool = True,                                       
+                                       use_dev_shm: bool = True,
+                                       window_width: int = 1052,
+                                       window_height: int = 825                                     
                                        ) -> WebDriver:
 
     service = Service(ChromeDriverManager().install())
     options = Options()
     options.add_experimental_option("detach", detach)
+    options.add_argument(f"--window-size={window_width},{window_height}")
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-renderer-backgrounding")
     options.page_load_strategy = 'normal'
@@ -33,6 +36,8 @@ def create_chrome_web_driver_conection(
         options.add_argument('--no-sandbox')
     if not use_dev_shm:
         options.add_argument('--disable-dev-shm-usage')
+    if headless:
+        options.add_argument("--headless=new")
 
     driver = webdriver.Chrome(service= service, options=options)
 

@@ -11,17 +11,14 @@ import browser_scripts
 import settings
 import utils
 import time
-from dotenv import load_dotenv
-import os
 
 class BaseAdminPanelTestSetup(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Setup code that runs once for all tests
-        load_dotenv()
-        cls.admin_email = os.getenv('ADMIN_EMAIL')
-        cls.admin_password = os.getenv('ADMIN_PASSWORD')
-        cls.driver = browser_automation.create_chrome_web_driver_conection()
+        cls.admin_email = settings.ADMIN_EMAIL
+        cls.admin_password = settings.ADMIN_PASSWORD
+        cls.driver = browser_automation.create_chrome_web_driver_conection(headless= settings.IS_HEADLESS)
         cls.driver.get(settings.ADMIN_LOGIN_URL)
         browser_automation.admin_login(cls.driver, cls.admin_email, cls.admin_password)
         browser_automation.wait(2)
