@@ -94,25 +94,16 @@ class TestAvailableInProductPage(BaseTestAvailableProduct):
         self.assertEqual(2, quantity)
 
 
-    def test_quantity_greater_than_25_simple_product(self):
+    def test_quantity_greater_than_stock(self):
+        self.driver.get(self.product_with_variants['url'])
         quantity_input = browser_elements.get_product_quantity_input_from_product_page(driver= self.driver)
-        amount = 30
+        amount = self.product_with_variants['stcok'] + 1
         quantity_input.clear()
         quantity_input.send_keys(amount)
 
         btn = browser_elements.get_add_to_cart_btn_from_product_page(driver= self.driver)
         btn.click()
-        self.run_test_product_added_to_cart_successfully_message()
-
-        is_in_cart = browser_automation.check_product_presence_in_cart(driver= self.driver,
-                                                                        product_uri= self.simple_product['uri']
-                                                                    )
-        self.assertTrue(is_in_cart, "The product should be present in the cart")
-
-        quantity_cart = browser_automation.check_product_quantity_in_cart(driver= self.driver,
-                                                          product_uri= self.simple_product['uri'])
-        
-        self.assertEqual(amount, quantity_cart)
+        self.run_test_product_addition_to_cart_failed_message()
 
 
 
