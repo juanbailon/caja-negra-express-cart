@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 ## --------------------------- ##
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -93,3 +94,19 @@ def set_discount_end_time_value(driver: WebDriver, end_time: datetime):
                                             element= end_date_element,
                                             value= end_time_str
                                         )
+
+
+def check_product_presence_in_cart(driver: WebDriver, product_uri: str) -> bool:
+    cart_contents =  browser_elements.get_cart_contents(driver= driver)
+    try:
+        cart_contents.find_element(By.XPATH, f"//div[@class='row']//a[@href='{product_uri}']")
+        return True
+    
+    except NoSuchElementException as e:
+        return False
+
+
+def check_product_quantity_in_cart(driver: WebDriver, product_uri: str) -> int | None:
+    quantity =  browser_elements.get_cart_product_quantity_input(driver= driver, product_uri= product_uri)
+
+    return int(quantity.get_attribute('value'))

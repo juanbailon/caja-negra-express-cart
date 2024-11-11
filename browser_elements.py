@@ -178,3 +178,83 @@ def notify_message_alert_success_is_visible(driver: WebDriver, element_timeout: 
 
     except TimeoutException as e:
         return False
+    
+
+def get_add_to_cart_btn_from_product_page(driver: WebDriver, element_timeout: int = 5) -> WebElement | None:
+    try:
+        btn = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.XPATH, "//button[\
+                                               contains(@class, 'btn') and\
+                                               contains(@class, 'btn-primary') and\
+                                               contains(@class, 'product-add-to-cart')]"
+                                               ))
+            )
+ 
+        return btn
+
+    except TimeoutException as e:
+        return None
+    
+
+
+def get_product_add_to_cart_btn_from_main_page(driver: WebDriver, product_uri: str, element_timeout:int = 5) -> WebElement | None:
+    try:
+        thumbnail = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.XPATH, f"//div[\
+                                               @class='thumbnail'\
+                                                and .//a[@href='{product_uri}']]"
+                                               ))
+            )
+                
+        btn = thumbnail.find_element(By.XPATH, ".//a[\
+                                                contains(@class, 'btn') and\
+                                                contains(@class, 'add-to-cart')]"
+                                     ) 
+        return btn
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_cart_contents(driver: WebDriver, element_timeout:int = 5) -> WebElement | None:
+    try:
+        cart_contents = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.XPATH, "//div[\
+                                               contains(@class, 'cart-body')]"
+                                               ))
+            )
+ 
+        return cart_contents
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_cart_product_quantity_input(driver: WebDriver, product_uri: str, element_timeout:int = 5) -> WebElement | None:
+    cart_contents = get_cart_contents(driver= driver)
+    try:
+        product_info = WebDriverWait(driver, element_timeout).until(
+            lambda x: cart_contents.find_element(By.XPATH, f"//div[@class='row' and .//a[@href='{product_uri}']]")
+            )
+        
+        quantity = WebDriverWait(driver, element_timeout).until(
+            lambda x: product_info.find_element(By.XPATH, f"//input[contains(@class, 'cart-product-quantity')]")
+            )
+ 
+        return quantity
+
+    except TimeoutException as e:
+        return None
+    
+    
+
+def get_product_quantity_input_from_product_page(driver: WebDriver, element_timeout:int = 5) -> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.ID, 'product_quantity'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
+    
