@@ -97,7 +97,7 @@ class TestAvailableInProductPage(BaseTestAvailableProduct):
     def test_quantity_greater_than_stock(self):
         self.driver.get(self.product_with_variants['url'])
         quantity_input = browser_elements.get_product_quantity_input_from_product_page(driver= self.driver)
-        amount = self.product_with_variants['stcok'] + 1
+        amount = self.product_with_variants['stock'] + 1
         quantity_input.clear()
         quantity_input.send_keys(amount)
 
