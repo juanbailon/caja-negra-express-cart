@@ -15,8 +15,7 @@ class BaseTestSetup(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         # Cleanup code that runs once after all tests
-        #cls.driver.quit()  # Close the browser driver
-        ...
+        cls.driver.quit()  # Close the browser driver
 
 
     def run_test_product_added_to_cart_successfully_message(self):
