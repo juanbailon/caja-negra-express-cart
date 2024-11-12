@@ -9,8 +9,7 @@ class BaseTestSetup(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Setup code that runs once for all tests
-        cls.driver = browser_automation.create_chrome_web_driver_conection(headless= settings.IS_HEADLESS,
-                                                                           detach= True)
+        cls.driver = browser_automation.create_chrome_web_driver_conection(headless= settings.IS_HEADLESS)
 
     @classmethod
     def tearDownClass(cls):
