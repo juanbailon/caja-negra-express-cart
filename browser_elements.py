@@ -298,3 +298,25 @@ def get_first_visible_modal_dialog(driver: WebDriver, element_timeout:int = 2)->
     except TimeoutException as e:
         return None
     
+
+
+def get_input_html_footer(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.ID, 'footerHtml_input'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_update_btn_admin_page(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        btn = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.ID, 'btnSettingsUpdate'))
+        )
+        return btn
+
+    except TimeoutException as e:
+        return None
