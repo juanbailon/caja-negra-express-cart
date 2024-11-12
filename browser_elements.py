@@ -257,4 +257,44 @@ def get_product_quantity_input_from_product_page(driver: WebDriver, element_time
 
     except TimeoutException as e:
         return None
+
+
+def get_shopping_cart_btn(driver: WebDriver, element_timeout:int = 2)-> WebElement | None:
+    try:
+        a_element = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.XPATH, "//a[\
+                                            @href='/checkout/cart' and\
+                                            contains(@class, 'btn')]"
+                                            ))
+        )
+        return a_element
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_empty_shopping_cart_btn(driver: WebDriver, element_timeout:int = 2)-> WebElement | None:
+    try:
+        btn = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.XPATH, "//button[\
+                                            @id='empty-cart']"
+                                            ))
+        )
+        return btn
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_first_visible_modal_dialog(driver: WebDriver, element_timeout:int = 2)-> WebElement | None:
+    try:
+        dialog_element = WebDriverWait(driver, element_timeout).until(
+            EC.visibility_of_element_located((By.XPATH, "//div[\
+                                            @class='modal-dialog']"
+                                            ))
+        )
+        return dialog_element
+
+    except TimeoutException as e:
+        return None
     

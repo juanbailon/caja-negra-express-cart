@@ -8,6 +8,8 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
@@ -98,8 +100,9 @@ def set_discount_end_time_value(driver: WebDriver, end_time: datetime):
 
 def check_product_presence_in_cart(driver: WebDriver, product_uri: str) -> bool:
     cart_contents =  browser_elements.get_cart_contents(driver= driver)
+    # print("$@@@@@@@@@@@@@@@@@@@@@@"  ,cart_contents.get_attribute('outerHTML'))
     try:
-        cart_contents.find_element(By.XPATH, f"//div[@class='row']//a[@href='{product_uri}']")
+        cart_contents.find_element(By.XPATH, f".//div[@class='row']//a[@href='{product_uri}']")
         return True
     
     except NoSuchElementException as e:
@@ -110,3 +113,43 @@ def check_product_quantity_in_cart(driver: WebDriver, product_uri: str) -> int |
     quantity =  browser_elements.get_cart_product_quantity_input(driver= driver, product_uri= product_uri)
 
     return int(quantity.get_attribute('value'))
+
+
+def add_product_to_cart_from_main_page(driver: WebDriver, product_uri:str, element_timeout:int = 3):
+    btn = browser_elements.get_product_add_to_cart_btn_from_main_page(driver= driver,
+                                                                    product_uri= product_uri,
+                                                                    element_timeout= element_timeout
+                                                                    )
+    btn.click()
+
+
+def open_shopping_cart_slide_out_panel(driver: WebDriver, element_timeout:int = 2):
+    btn = browser_elements.get_shopping_cart_btn(driver= driver, element_timeout= element_timeout)
+    btn.click()
+
+def click_empty_shopping_cart(driver: WebDriver, element_timeout:int = 2):
+    btn = browser_elements.get_empty_shopping_cart_btn(driver= driver, element_timeout= element_timeout)
+    btn.click()
+
+
+def confirm_empty_cart_operation(driver: WebDriver, element_tiemout:int = 2):
+    modal_dialog = browser_elements.get_first_visible_modal_dialog(driver= driver, element_timeout= element_tiemout)
+    confirm_btn = modal_dialog.find_element(By.ID, 'buttonConfirm')
+    confirm_btn.click()
+
+
+def cancel_empty_cart_operation(driver: WebDriver, element_tiemout:int = 2):
+    modal_dialog = browser_elements.get_first_visible_modal_dialog(driver= driver, element_timeout= element_tiemout)
+    close_btn = modal_dialog.find_element(By.XPATH, ".//button[@data-dismiss='modal']")
+    close_btn.click()
+
+
+# def wait_until_cart_slide_out_panel_disappears(driver: WebDriver, element_timeout: int = 5) -> bool:
+#     try:
+#         is_invisible = WebDriverWait(driver, element_timeout).until(
+#             EC.invisibility_of_element_located((By.XPATH, "//div[@id='cart']"))
+#         )
+#         return is_invisible  # Returns True if the element is invisible
+
+#     except TimeoutException as e:
+#         raise e# Returns False if the element is still visible after the timeout
