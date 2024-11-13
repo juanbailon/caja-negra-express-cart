@@ -320,3 +320,58 @@ def get_update_btn_admin_page(driver: WebDriver, element_timeout:int = 3)-> WebE
 
     except TimeoutException as e:
         return None
+    
+
+def get_SMTP_host_input(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.NAME, 'emailHost'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_SMTP_port_input(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.NAME, 'emailPort'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_SMTP_username_input(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.NAME, 'emailUser'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_SMTP_password_input(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.NAME, 'emailPassword'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
+    
+
+def get_SMTP_email_secure_checkbox(driver: WebDriver, element_timeout:int = 3)-> WebElement | None:
+    try:
+        input = WebDriverWait(driver, element_timeout).until(
+            EC.presence_of_element_located((By.NAME, 'emailSecure'))
+        )
+        return input
+
+    except TimeoutException as e:
+        return None
